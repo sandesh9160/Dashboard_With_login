@@ -4,8 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-User = get_user_model()   # ✅ safer than importing User directly
-
+User = get_user_model()   
 
 # -------- Serializer for Registration --------
 class RegisterSerializer(serializers.ModelSerializer):

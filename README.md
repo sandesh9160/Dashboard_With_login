@@ -1,177 +1,188 @@
-# Dashboard with JWT Login (Django REST Framework)
+# 🛡️ Dashboard with JWT Login (Django REST Framework)
 
-A simple Django REST Framework project with JWT authentication and API endpoints for:
+![Django](https://img.shields.io/badge/Django-4.2-green?logo=django) ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python) ![DRF](https://img.shields.io/badge/DRF-RESTful-orange) ![JWT](https://img.shields.io/badge/JWT-Authentication-red)
 
-User registration
+A **simple Django REST Framework** project implementing **JWT authentication** with fully functional API endpoints for:
 
-Login (access & refresh tokens)
+- User registration  
+- Login (Access & Refresh tokens)  
+- Protected dashboard  
+- Token refresh  
+- Logout & refresh token blacklist  
 
-Protected dashboard
+All APIs are tested using **JWT headers**—no Postman required.  
 
-Token refresh
+---
 
-Logout & refresh token blacklist
+## ⚡ Features
 
-All APIs are tested using JWT headers. No Postman is required, but headers must be sent to access protected endpoints.
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/register/` | POST | Register a new user |
+| `/api/token/` | POST | Login & obtain JWT (access & refresh tokens) |
+| `/api/dashboard/` | GET | Protected endpoint (JWT required) |
+| `/api/token/refresh/` | POST | Refresh access token |
+| `/api/logout/` | POST | Logout & blacklist refresh token |
 
-Features
+---
 
-/api/register/ → User registration
+## 📝 Requirements
 
-/api/token/ → Login (returns access & refresh token)
-
-/api/dashboard/ → Protected endpoint (JWT required)
-
-/api/token/refresh/ → Refresh access token
-
-/api/logout/ → Logout (blacklist refresh token)
-
-Requirements
-
-Python 3.12+
-
-Django 4.2+
-
-djangorestframework
-
-djangorestframework-simplejwt
+- Python 3.12+  
+- Django 4.2+  
+- djangorestframework  
+- djangorestframework-simplejwt  
 
 Install dependencies:
+pip install django djangorestframework djangorestframework-simplejwt 
 
-pip install django djangorestframework djangorestframework-simplejwt
+# 🚀 Project Setup
 
-Project Setup
+# Clone the repository:
 
-Clone the repository:
+- git clone <your-repo-url>
+- cd Dashboard_With_login
 
-git clone <your-repo-url>
-cd Dashboard_With_login
 
-Apply migrations:
+# Apply migrations:
 
 python manage.py makemigrations
 python manage.py migrate
 
-Create a superuser:
+
+# Create a superuser:
 
 python manage.py createsuperuser
+
 
 Run the development server:
 
 python manage.py runserver
 
-Testing JWT APIs in Browser
+🧪 Testing JWT APIs
 
-Since SessionAuthentication is removed, protected endpoints require JWT headers.
+Since SessionAuthentication is removed, all protected endpoints require JWT headers.
 
 # 1️⃣ Register a new user
 
-Open: http://127.0.0.1:8000/api/register/
-
-Method: POST → fill JSON:
+Endpoint: http://127.0.0.1:8000/api/register/
+Method: POST
+Payload:
 
 {
-"username": "sandesh",
-"email": "sandesh@example.com",
-"password": "test1234"
+  "username": "sandesh",
+  "email": "sandesh@example.com",
+  "password": "test1234"
 }
 
-Click POST → Execute to create a user.
+
+Response: User created successfully.
 
 # 2️⃣ Obtain JWT tokens (Login)
 
-Open: http://127.0.0.1:8000/api/token/
-
-Method: POST → JSON:
+Endpoint: http://127.0.0.1:8000/api/token/
+Method: POST
+Payload:
 
 {
-"username": "sandesh",
-"password": "test1234"
+  "username": "sandesh",
+  "password": "test1234"
 }
+
 
 Response:
 
 {
-"refresh": "<REFRESH_TOKEN>",
-"access": "<ACCESS_TOKEN>"
+  "refresh": "<REFRESH_TOKEN>",
+  "access": "<ACCESS_TOKEN>"
 }
 
-Copy the access token for protected endpoints.
+
+Copy the access token to use in protected endpoints.
 
 # 3️⃣ Access protected dashboard
 
-Open: http://127.0.0.1:8000/api/dashboard/
-
-You must include headers:
+Endpoint: http://127.0.0.1:8000/api/dashboard/
+Method: GET
+Headers:
 
 Authorization: Bearer <ACCESS_TOKEN>
 
+
 Response:
 
 {
-"user": "sandesh",
-"message": "Hello sandesh"
+  "user": "sandesh",
+  "message": "Hello sandesh"
 }
 
-You can use curl, httpie, or a browser extension like ModHeader to send headers.
+
+You can use curl, httpie, or browser extensions like ModHeader to send headers.
 
 # 4️⃣ Refresh access token
 
-Open: /api/token/refresh/
-
-POST JSON:
+Endpoint: /api/token/refresh/
+Method: POST
+Payload:
 
 {
-"refresh": "<REFRESH_TOKEN>"
+  "refresh": "<REFRESH_TOKEN>"
 }
+
 
 Response:
 
 {
-"access": "<NEW_ACCESS_TOKEN>"
+  "access": "<NEW_ACCESS_TOKEN>"
 }
 
-5️⃣ Logout
+# 5️⃣ Logout
 
-Open: /api/logout/
-
-POST JSON:
+Endpoint: /api/logout/
+Method: POST
+Payload:
 
 {
-"refresh": "<REFRESH_TOKEN>"
+  "refresh": "<REFRESH_TOKEN>"
 }
+
 
 Response:
 
 {
-"message": "Logout successful"
+  "message": "Logout successful"
 }
 
-Refresh token is now blacklisted and cannot be used again.
 
-Git Branch Workflow
+The refresh token is now blacklisted and cannot be used again.
+
+🌿 Git Branch Workflow
 
 Rename local master → main:
 
 git branch -m master main
 
+
 Push to remote:
 
-git push -u origin main
+  git push -u origin main ``` bash
 
-If remote has existing commits:
 
-git pull origin main --allow-unrelated-histories
+If the remote has existing commits:
+
+ git pull origin main --allow-unrelated-histories
 git push origin main
+
 
 Use --force only if you want to overwrite remote history.
 
-**Notes**
+# ⚠️ Notes
 
-Protected endpoints will always return 401 if JWT header is missing.
+Protected endpoints will always return 401 Unauthorized if JWT header is missing.
 
 Access token expires in 5 minutes (default).
 
 Refresh token expires in 1 day (default).
 
-This README is ready to save as README.md in your repo.
+```bash
+pip install django djangorestframework djangorestframework-simplejwt

@@ -41,7 +41,7 @@ pip install django djangorestframework djangorestframework-simplejwt
 # Clone the repository:
 
 git clone <your-repo-url>
-cd Dashboard_With_login
+cd dashboard_project
 
 
 # Apply migrations:

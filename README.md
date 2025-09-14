@@ -166,7 +166,7 @@ git push origin main
 
 Use --force only if you want to overwrite remote history.
 
-** Notes **
+**Notes**
 
 Protected endpoints will always return 401 if JWT header is missing.
 
